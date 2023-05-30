@@ -13,6 +13,7 @@ function App() {
   return (
     <div className={styles.App}>
       <div className={styles['app-header']}>
+        bugaa
         <Layout.Header className={styles['main-header']}>
           <img src={logo} alt="" className={styles['App-logo']} />
           <Typography.Title level={3} className={styles.title}>React haha</Typography.Title>
