@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-05-30 09:53:02
- * @LastEditTime: 2023-06-09 09:19:14
+ * @LastEditTime: 2023-06-09 09:45:29
  * @Description:
  */
 import React from "react";
@@ -12,6 +12,7 @@ import {
   SideMenu,
   Carousel,
   ProductCollect,
+  Partner,
 } from "./components";
 import { Row, Col, Typography } from "antd";
 import { productList1, productList2, productList3 } from "./mockups";
@@ -60,6 +61,13 @@ function App() {
           products={productList3}
           sideImage={sideImage2}
         ></ProductCollect>
+        <Partner
+          title={
+            <Typography.Title level={3} type="secondary">
+              合作伙伴
+            </Typography.Title>
+          }
+        ></Partner>
       </div>
       <Footer />
     </div>
