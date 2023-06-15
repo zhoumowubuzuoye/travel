@@ -1,11 +1,17 @@
+/*
+ * @Author: xiewenhao
+ * @Date: 2023-06-09 09:46:37
+ * @LastEditTime: 2023-06-13 13:43:59
+ * @Description: 
+ */
 import React from "react";
 import { Layout, Typography } from "antd";
-
+import {t} from 'i18next'
 export const Footer: React.FC = () => {
   return (
     <Layout.Footer>
       <Typography.Title level={3} style={{ textAlign: "center" }}>
-        版权所有 @ React 旅游网
+        {t('footer.detail')}
       </Typography.Title>
     </Layout.Footer>
   );

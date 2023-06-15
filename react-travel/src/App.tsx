@@ -6,19 +6,19 @@
  */
 import React from "react";
 import styles from "./App.module.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home, SignIn, RegisterPage, DetailPage } from "./pages";
 function App() {
   return (
     <div className={styles.App}>
       <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Home}></Route>
-          <Route path="/signIn" component={SignIn}></Route>
-          <Route path="/register" component={RegisterPage}></Route>
-          <Route path="/detail/:id" component={DetailPage}></Route>
-          <Route render={() => <h1>404</h1>}></Route>
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/signin" element={<SignIn />}></Route>
+          <Route path="/register" element={<RegisterPage />}></Route>
+          <Route path="/detail/:id" element={<DetailPage />}></Route>
+          <Route path='*' element={<h1>404</h1>}></Route>
+        </Routes>
       </BrowserRouter>
     </div>
   );
