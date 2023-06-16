@@ -22,3 +22,7 @@
     margin-bottom: 30px;
     padding-bottom: 30px;
 }
+
+:global .ant-picker-range .ant-picker-active-bar {
+    background: none;
+}
