@@ -1,11 +1,11 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-09 09:46:37
- * @LastEditTime: 2023-06-13 16:51:13
- * @Description: 
+ * @LastEditTime: 2023-06-20 17:26:30
+ * @Description:
  */
 import React from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import logo from "../../logo.svg";
 import { Layout, Typography, Input, Menu, Button, Dropdown } from "antd";
@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
   const language = useSelector((state) => state.language.language);
   const languageList = useSelector((state) => state.language.languageList);
   const dispatch = useDispatch();
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const menuClickHandler = (e) => {
     const action = changeLanguageActionCreator(e.key);
     dispatch(action);
@@ -66,9 +66,11 @@ export const Header: React.FC = () => {
               {t("header.title")}
             </Typography.Title>
           </span>
+
           <Input.Search
             placeholder="haha"
             className={styles["search-input"]}
+            onSearch={(value) => navigate(`/search/${value}`)}
           ></Input.Search>
         </Layout.Header>
         <Menu
@@ -97,4 +99,3 @@ export const Header: React.FC = () => {
     </>
   );
 };
-

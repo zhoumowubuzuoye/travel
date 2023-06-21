@@ -7,7 +7,7 @@
 import React from "react";
 import styles from "./App.module.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, SignIn, RegisterPage, DetailPage } from "./pages";
+import { Home, SignIn, RegisterPage, DetailPage, Search } from "./pages";
 function App() {
   return (
     <div className={styles.App}>
@@ -17,7 +17,8 @@ function App() {
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/register" element={<RegisterPage />}></Route>
           <Route path="/detail/:id" element={<DetailPage />}></Route>
-          <Route path='*' element={<h1>404</h1>}></Route>
+          <Route path="/search/:keywords" element={<Search />}></Route>
+          <Route path="*" element={<h1>404</h1>}></Route>
         </Routes>
       </BrowserRouter>
     </div>

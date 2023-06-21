@@ -1,13 +1,7 @@
 /*
  * @Author: xiewenhao
- * @Date: 2023-06-15 16:54:41
- * @LastEditTime: 2023-06-16 16:57:29
- * @Description:
- */
-/*
- * @Author: xiewenhao
  * @Date: 2023-06-12 17:00:52
- * @LastEditTime: 2023-06-16 16:18:46
+ * @LastEditTime: 2023-06-20 16:26:21
  * @Description:
  */
 import React, { useState, useEffect } from "react";
@@ -27,6 +21,8 @@ import { Header, Footer, ProductIntro, ProductComment } from "../../components";
 import styles from "./DetailPage.module.css";
 import type { DatePickerProps } from "antd";
 import { commentMockData } from "./mockup";
+import { useSelector, useAppDispatch } from "../../redux/hooks";
+import { getProductDetail } from "../../redux/productDetail/slice";
 
 const { Link } = Anchor;
 
@@ -36,27 +32,18 @@ type MatchParams = {
 
 const { RangePicker } = DatePicker;
 
-const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-  console.log(date, dateString);
-};
+const onChange: DatePickerProps["onChange"] = (date, dateString) => {};
 
 export const DetailPage: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { id } = useParams<MatchParams>();
-  const [loading, setLoading] = useState(true);
-  const [product, setProduct] = useState<any>(null);
-  const [error, setError] = useState<null | string>(null);
+  const loading = useSelector((state) => state.productDetail.loading);
+  const data = useSelector((state) => state.productDetail.data);
+  const error = useSelector((state) => state.productDetail.error);
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      try {
-        const res = await await axios.get(
-          `http://123.56.149.216:8080/api/touristRoutes/${id}`
-        );
-        setProduct(res.data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        setError(error instanceof Error ? error.message : "error");
+      if (id) {
+        dispatch(getProductDetail(id));
       }
     };
     fetchData();
@@ -86,14 +73,14 @@ export const DetailPage: React.FC = () => {
           <Row>
             <Col span={13}>
               <ProductIntro
-                price={product.price}
-                title={product.title}
-                shortDescription={product.shortDescription}
-                coupons={product.coupons}
-                points={product.points}
-                discount={product.discount}
-                rating={product.rating}
-                pictures={product.touristRoutePictures}
+                price={data.price}
+                title={data.title}
+                shortDescription={data.shortDescription}
+                coupons={data.coupons}
+                points={data.points}
+                discount={data.discount}
+                rating={data.rating}
+                pictures={data.touristRoutePictures}
               />
             </Col>
             <Col span={11}>
@@ -122,7 +109,7 @@ export const DetailPage: React.FC = () => {
             <Typography.Title level={3}>产品特色</Typography.Title>
           </Divider>
           <div
-            dangerouslySetInnerHTML={{ __html: product.features }}
+            dangerouslySetInnerHTML={{ __html: data.features }}
             style={{ margin: 50 }}
           ></div>
         </div>
@@ -131,7 +118,7 @@ export const DetailPage: React.FC = () => {
             <Typography.Title level={3}>费用</Typography.Title>
           </Divider>
           <div
-            dangerouslySetInnerHTML={{ __html: product.fees }}
+            dangerouslySetInnerHTML={{ __html: data.fees }}
             style={{ margin: 50 }}
           ></div>
         </div>
@@ -140,7 +127,7 @@ export const DetailPage: React.FC = () => {
             <Typography.Title level={3}>购订须知</Typography.Title>
           </Divider>
           <div
-            dangerouslySetInnerHTML={{ __html: product.notes }}
+            dangerouslySetInnerHTML={{ __html: data.notes }}
             style={{ margin: 50 }}
           ></div>
         </div>
