@@ -10,7 +10,7 @@ type MatchParams = {
   keywords: string;
 };
 
-export const Search: React.FC = () => {
+export const SearchPage: React.FC = () => {
   const { data, loading, error } = useSelector((state) => state.productSearch);
   const dispatch = useAppDispatch();
   const { keywords } = useParams<MatchParams>();
