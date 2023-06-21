@@ -1,12 +1,6 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-05-30 09:53:02
- * @LastEditTime: 2023-06-21 10:12:59
- * @Description: 
- */
-/*
- * @Author: xiewenhao
- * @Date: 2023-05-30 09:53:02
  * @LastEditTime: 2023-06-12 16:10:24
  * @Description:
  */
@@ -23,7 +17,7 @@ function App() {
           <Route path="/signin" element={<SignIn />}></Route>
           <Route path="/register" element={<RegisterPage />}></Route>
           <Route path="/detail/:id" element={<DetailPage />}></Route>
-          <Route path="/search/:keywords" element={<SearchPage />}></Route>
+          <Route path="/search" element={<SearchPage />}></Route>
           <Route path="*" element={<h1>404</h1>}></Route>
         </Routes>
       </BrowserRouter>

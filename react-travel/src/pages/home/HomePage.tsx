@@ -1,19 +1,12 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-12 16:11:04
- * @LastEditTime: 2023-06-15 15:30:36
+ * @LastEditTime: 2023-06-21 14:02:51
  * @Description:
  */
 import React, { useEffect, useState } from "react";
-import {
-  Footer,
-  Header,
-  SideMenu,
-  Carousel,
-  ProductCollect,
-  Partner,
-} from "../../components";
-import axios from "axios";
+import { SideMenu, Carousel, ProductCollect, Partner } from "../../components";
+import { MainLayout } from "../../layout/mainLayout";
 import { Row, Col, Typography, Spin } from "antd";
 import sideImage from "../../assets/images/sider_2019_12-09.png";
 import sideImage1 from "../../assets/images/sider_2019_02-04.png";
@@ -41,15 +34,8 @@ const HomePageComponent: React.FC = () => {
     (state) => state.recommendProducts.productList
   );
   const error = useSelector((state) => state.recommendProducts.error);
-  useEffect(() => {
-    dispatch(giveDataActionCreator());
-  }, []);
-  if (loading) {
-    return <Spin />;
-  }
-  return (
-    <div>
-      <Header />
+  const ChildNode: React.FC = () => {
+    return (
       <div className={styles["page-content"]}>
         <Row style={{ marginTop: 20 }}>
           <Col span={6}>
@@ -97,7 +83,19 @@ const HomePageComponent: React.FC = () => {
           imgList={[facebook, icon, follow, microsoft]}
         ></Partner>
       </div>
-      <Footer />
+    );
+  };
+  useEffect(() => {
+    dispatch(giveDataActionCreator());
+  }, []);
+  if (loading) {
+    return <Spin />;
+  }
+  return (
+    <div>
+      <MainLayout>
+        <ChildNode />
+      </MainLayout>
     </div>
   );
 };

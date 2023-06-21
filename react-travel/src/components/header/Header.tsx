@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-09 09:46:37
- * @LastEditTime: 2023-06-20 17:26:30
+ * @LastEditTime: 2023-06-21 11:04:56
  * @Description:
  */
 import React from "react";
@@ -11,24 +11,27 @@ import logo from "../../logo.svg";
 import { Layout, Typography, Input, Menu, Button, Dropdown } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { LanguageState } from "../../redux/language/languageReducer";
-import { useSelector } from "../../redux/hooks";
+import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
 import {
   changeLanguageActionCreator,
   addLanguageActionCreator,
 } from "../../redux/language/languageActions";
 import { useTranslation } from "react-i18next";
+import { productSearchSlice } from "../../redux/productSearch/slice";
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
   const language = useSelector((state) => state.language.language);
   const languageList = useSelector((state) => state.language.languageList);
+  const searchValue = useSelector((state) => state.productSearch.searchValue);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const menuClickHandler = (e) => {
     const action = changeLanguageActionCreator(e.key);
     dispatch(action);
   };
+  const appdispatch = useAppDispatch();
   return (
     <>
       <div className={styles["top-header"]}>
@@ -70,7 +73,13 @@ export const Header: React.FC = () => {
           <Input.Search
             placeholder="haha"
             className={styles["search-input"]}
-            onSearch={(value) => navigate(`/search/${value}`)}
+            value={searchValue}
+            onSearch={(value) => navigate(`/search?keywords=${value}`)}
+            onChange={(e) =>
+              appdispatch(
+                productSearchSlice.actions.fetchSearchValue(e.target.value)
+              )
+            }
           ></Input.Search>
         </Layout.Header>
         <Menu
