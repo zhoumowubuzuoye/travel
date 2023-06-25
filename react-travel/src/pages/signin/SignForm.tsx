@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-21 17:28:13
- * @LastEditTime: 2023-06-25 10:18:29
+ * @LastEditTime: 2023-06-25 10:59:28
  * @Description: 
  */
 import { Button, Checkbox, Form, Input, message } from "antd";
@@ -15,7 +15,7 @@ export const SignForm: React.FC = () => {
   const onFinish = async (values: any) => {
     try {
     } catch {
-      message.error("新建失败1");
+      message.error("新建失败1222");
     }
   };
   const onFinishFailed = (errorInfo: any) => {
