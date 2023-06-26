@@ -1,10 +1,10 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-09 09:46:37
- * @LastEditTime: 2023-06-21 11:04:56
+ * @LastEditTime: 2023-06-26 13:59:32
  * @Description:
  */
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import logo from "../../logo.svg";
@@ -19,6 +19,13 @@ import {
 } from "../../redux/language/languageActions";
 import { useTranslation } from "react-i18next";
 import { productSearchSlice } from "../../redux/productSearch/slice";
+import jwt_decode, { JwtPayload as DefaultJwtPayLoad } from "jwt-decode";
+import jwtDecode from "jwt-decode";
+import { UserSlice } from "../../redux/user/slice";
+
+interface JwtPayload extends DefaultJwtPayLoad {
+  username: string;
+}
 
 export const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -27,11 +34,22 @@ export const Header: React.FC = () => {
   const searchValue = useSelector((state) => state.productSearch.searchValue);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const jwt = useSelector((state) => state.user.token);
   const menuClickHandler = (e) => {
     const action = changeLanguageActionCreator(e.key);
     dispatch(action);
   };
+  const signOut = () => {
+    dispatch(UserSlice.actions.fetchSignOut());
+    navigate("/signin");
+  };
   const appdispatch = useAppDispatch();
+  useEffect(() => {
+    if (jwt) {
+      const token = jwt_decode<JwtPayload>(jwt);
+      dispatch(UserSlice.actions.fetchUsername(token.username));
+    }
+  }, [jwt]);
   return (
     <>
       <div className={styles["top-header"]}>
@@ -52,11 +70,9 @@ export const Header: React.FC = () => {
             {language === "zh" ? "中文" : "English"}
           </Dropdown.Button>
           <Button.Group className={styles["button-group"]}>
+            <Button onClick={signOut}>{t("header.signOut")}</Button>
             <Button onClick={() => navigate("/register")}>
               {t("header.register")}
-            </Button>
-            <Button onClick={() => navigate("/signIn")}>
-              {t("header.signin")}
             </Button>
           </Button.Group>
         </div>
