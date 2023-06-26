@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-13 09:31:31
- * @LastEditTime: 2023-06-15 15:20:05
+ * @LastEditTime: 2023-06-26 10:10:25
  * @Description:
  */
 import { createStore, applyMiddleware } from "redux";
@@ -11,11 +11,13 @@ import thunk from "redux-thunk";
 import { productDetailSlice } from "./productDetail/slice";
 import { productSearchSlice } from "./productSearch/slice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { UserSlice } from "./user/slice";
 const rootReducer = combineReducers({
   language: languageReducer,
   recommendProducts: recommendProductsReducer,
   productDetail: productDetailSlice.reducer,
   productSearch: productSearchSlice.reducer,
+  user: UserSlice.reducer,
 });
 // const store = createStore(rootReducer, applyMiddleware(thunk));
 const store = configureStore({

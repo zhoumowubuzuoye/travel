@@ -1,34 +1,40 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-21 17:28:13
- * @LastEditTime: 2023-06-25 11:05:04
- * @Description: 
+ * @LastEditTime: 2023-06-26 15:33:37
+ * @Description:
  */
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import React from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector, useAppDispatch } from "../../redux/hooks";
+import { SignIn } from "../../redux/user/slice";
 
 export const SignForm: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const dispatch = useAppDispatch();
+  const { loading, token, error } = useSelector((state) => state.user);
   const onFinish = async (values: any) => {
     try {
+      dispatch(SignIn(values));
     } catch {
-      message.error("新建失败133333");
+      message.error("登陆失败");
     }
   };
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed = (errorInfo: any) => {};
+  useEffect(() => {
+    token ? navigate("/") : navigate("/signin");
+  }, [token]);
   return (
     <Form
-      name="basic"
+      name="login"
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       style={{ width: "50%", margin: "0 auto" }}
+      form={form}
     >
       <Form.Item
         label="email"
@@ -42,7 +48,7 @@ export const SignForm: React.FC = () => {
       <Form.Item
         label="Password"
         name="password"
-        labelCol={{ span: 2  }}
+        labelCol={{ span: 2 }}
         rules={[{ required: true, message: "Please input your password!" }]}
       >
         <Input.Password />
@@ -53,7 +59,7 @@ export const SignForm: React.FC = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={loading}>
           Submit
         </Button>
       </Form.Item>

@@ -1,13 +1,14 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-05-30 09:53:02
- * @LastEditTime: 2023-06-12 16:10:24
+ * @LastEditTime: 2023-06-26 15:32:01
  * @Description:
  */
-import React from "react";
+import React,{useEffect} from "react";
 import styles from "./App.module.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home, SignIn, RegisterPage, DetailPage, SearchPage } from "./pages";
+import {useAppDispatch,useSelector} from './redux/hooks'
 function App() {
   return (
     <div className={styles.App}>
