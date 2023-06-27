@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-09 09:46:37
- * @LastEditTime: 2023-06-26 13:59:32
+ * @LastEditTime: 2023-06-27 10:13:38
  * @Description:
  */
 import React, { useEffect } from "react";
@@ -35,6 +35,7 @@ export const Header: React.FC = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const jwt = useSelector((state) => state.user.token);
+  const username = useSelector((state) => state.user.username);
   const menuClickHandler = (e) => {
     const action = changeLanguageActionCreator(e.key);
     dispatch(action);
@@ -70,10 +71,25 @@ export const Header: React.FC = () => {
             {language === "zh" ? "中文" : "English"}
           </Dropdown.Button>
           <Button.Group className={styles["button-group"]}>
-            <Button onClick={signOut}>{t("header.signOut")}</Button>
-            <Button onClick={() => navigate("/register")}>
-              {t("header.register")}
-            </Button>
+            {jwt ? (
+              <>
+                <span>{t("header.welcome")}</span>
+                <Typography.Text>{username}</Typography.Text>
+                <Button onClick={() => navigate("/shoppingcart")}>
+                  {t("header.shoppingCart")}
+                </Button>
+                <Button onClick={signOut}>{t("header.signOut")}</Button>
+              </>
+            ) : (
+              <>
+                <Button onClick={() => navigate("/register")}>
+                  {t("header.register")}
+                </Button>
+                <Button onClick={() => navigate("/signin")}>
+                  {t("header.signin")}
+                </Button>
+              </>
+            )}
           </Button.Group>
         </div>
       </div>

@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-26 09:21:21
- * @LastEditTime: 2023-06-26 10:21:15
+ * @LastEditTime: 2023-06-27 14:42:24
  * @Description:
  */
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
@@ -29,6 +29,7 @@ export const SignIn = createAsyncThunk(
   "signIn/user",
   async (data: QueryParams) => {
     const res = await axios.post("http://123.56.149.216:8080/auth/login", data);
+    axios.defaults.headers.Authorization = `bearer ${res.data.token}`;
     return res.data.token;
   }
 );
