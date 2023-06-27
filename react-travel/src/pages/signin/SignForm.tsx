@@ -19,7 +19,7 @@ export const SignForm: React.FC = () => {
     try {
       dispatch(SignIn(values));
     } catch {
-      message.error("登陆失败");
+      message.error("登陆失败");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     }
   };
   const onFinishFailed = (errorInfo: any) => {};
