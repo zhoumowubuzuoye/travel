@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-21 17:28:13
- * @LastEditTime: 2023-06-26 11:26:04
+ * @LastEditTime: 2023-06-27 08:31:50
  * @Description:
  */
 import { Button, Checkbox, Form, Input, message } from "antd";
@@ -19,7 +19,7 @@ export const SignForm: React.FC = () => {
     try {
       dispatch(SignIn(values));
     } catch {
-      message.error("登陆失败");
+      message.error("登陆失败");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
     }
   };
   const onFinishFailed = (errorInfo: any) => {};
