@@ -29,7 +29,6 @@ export const SignIn = createAsyncThunk(
   "signIn/user",
   async (data: QueryParams) => {
     const res = await axios.post("http://123.56.149.216:8080/auth/login", data);
-    axios.defaults.headers.Authorization = `bearer ${res.data.token}`;
     return res.data.token;
   }
 );

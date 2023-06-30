@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-12 17:00:52
- * @LastEditTime: 2023-06-21 14:04:15
+ * @LastEditTime: 2023-06-28 10:09:19
  * @Description:
  */
 import React, { useState, useEffect } from "react";
@@ -16,6 +16,7 @@ import {
   Typography,
   Menu,
   Anchor,
+  Button,
 } from "antd";
 import { ProductIntro, ProductComment } from "../../components";
 import { MainLayout } from "../../layout/mainLayout";
@@ -24,6 +25,12 @@ import type { DatePickerProps } from "antd";
 import { commentMockData } from "./mockup";
 import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { getProductDetail } from "../../redux/productDetail/slice";
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  postShoppingCartItems,
+  delShoppingCartItems,
+  getShoppingCart,
+} from "../../redux/shoppingCart/slice";
 
 const { Link } = Anchor;
 
@@ -41,6 +48,9 @@ export const DetailPage: React.FC = () => {
   const loading = useSelector((state) => state.productDetail.loading);
   const data = useSelector((state) => state.productDetail.data);
   const error = useSelector((state) => state.productDetail.error);
+  const shoppingloaing = useSelector((state) => state.shoppingCart.loading);
+  const shoppingCart = useSelector((state) => state.shoppingCart.shoppingCart);
+
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
@@ -49,6 +59,7 @@ export const DetailPage: React.FC = () => {
     };
     fetchData();
   }, []);
+
   if (loading) {
     return (
       <Spin
@@ -85,6 +96,55 @@ export const DetailPage: React.FC = () => {
                 />
               </Col>
               <Col span={11}>
+                {shoppingCart.some((item) => {
+                  return item.touristRouteId === id;
+                }) ? (
+                  <Button
+                    danger
+                    style={{
+                      marginTop: 50,
+                      marginBottom: 30,
+                      display: "block",
+                    }}
+                    loading={shoppingloaing}
+                    onClick={() =>
+                      dispatch(
+                        delShoppingCartItems([
+                          shoppingCart.filter(
+                            (item) => item.touristRouteId === id
+                          )[0].id,
+                        ])
+                      ).then(() => {
+                        dispatch(getShoppingCart());
+                      })
+                    }
+                  >
+                    删除
+                  </Button>
+                ) : (
+                  <Button
+                    style={{
+                      marginTop: 50,
+                      marginBottom: 30,
+                      display: "block",
+                    }}
+                    type="primary"
+                    loading={shoppingloaing}
+                    onClick={() => {
+                      dispatch(
+                        postShoppingCartItems({
+                          touristRouteId: id,
+                        })
+                      ).then(() => {
+                        dispatch(getShoppingCart());
+                      });
+                    }}
+                  >
+                    <ShoppingCartOutlined />
+                    放入购物车
+                  </Button>
+                )}
+
                 <RangePicker style={{ marginTop: 20 }} />
               </Col>
             </Row>

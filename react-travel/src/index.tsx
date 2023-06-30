@@ -16,7 +16,6 @@ import axios from "axios";
 import { PersistGate } from "redux-persist/integration/react";
 
 axios.defaults.headers["x-icode"] = "868EEE91D4CDC1A0";
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

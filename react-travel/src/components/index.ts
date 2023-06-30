@@ -3,9 +3,11 @@ export * from "./footer";
 export * from "./sideMenu";
 export * from "./carousel";
 export * from "./ProductCollection";
-export * from './Partner'
-export * from './productIntro'
-export * from './productComments'
-export * from './filter'
-export * from './productList'
-export * from './paymentCard'
+export * from "./Partner";
+export * from "./productIntro";
+export * from "./productComments";
+export * from "./filter";
+export * from "./productList";
+export * from "./paymentCard";
+export * from "./paymentForm";
+export * from "./checkOutCard";

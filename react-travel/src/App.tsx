@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-05-30 09:53:02
- * @LastEditTime: 2023-06-27 13:32:38
+ * @LastEditTime: 2023-06-28 11:24:01
  * @Description:
  */
 import React, { useEffect } from "react";
@@ -14,15 +14,25 @@ import {
   DetailPage,
   SearchPage,
   ShoppingCart,
+  PlaceOrderPage,
 } from "./pages";
 import { useAppDispatch, useSelector } from "./redux/hooks";
 import { Navigate } from "react-router-dom";
+import { getShoppingCart } from "./redux/shoppingCart/slice";
+import axios from "axios";
+
 const PrivateRoute = ({ children }) => {
   const jwt = useSelector((state) => state.user.token);
   return jwt ? children : <Navigate to={"/signin"} />;
 };
 
 function App() {
+  const { token } = useSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  if (token) axios.defaults.headers.Authorization = `bearer ${token}`;
+  useEffect(() => {
+    if (token) dispatch(getShoppingCart());
+  }, []);
   return (
     <div className={styles.App}>
       <BrowserRouter>
@@ -32,6 +42,14 @@ function App() {
           <Route path="/register" element={<RegisterPage />}></Route>
           <Route path="/detail/:id" element={<DetailPage />}></Route>
           <Route path="/search" element={<SearchPage />}></Route>
+          <Route
+            path="/placeorder"
+            element={
+              <PrivateRoute>
+                <></>
+              </PrivateRoute>
+            }
+          ></Route>
           <Route
             path="/shoppingcart"
             element={

@@ -1,7 +1,7 @@
 /*
  * @Author: xiewenhao
  * @Date: 2023-06-13 09:31:31
- * @LastEditTime: 2023-06-27 14:51:50
+ * @LastEditTime: 2023-06-28 13:32:33
  * @Description:
  */
 import { createStore, applyMiddleware } from "redux";
@@ -14,6 +14,7 @@ import { productDetailSlice } from "./productDetail/slice";
 import { productSearchSlice } from "./productSearch/slice";
 import { UserSlice } from "./user/slice";
 import { ShoppingCartSlice } from "./shoppingCart/slice";
+import { placeOrderSlice } from "./placeOrder/slice";
 
 const persistConfig = {
   key: "root",
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   productSearch: productSearchSlice.reducer,
   user: UserSlice.reducer,
   shoppingCart: ShoppingCartSlice.reducer,
+  placeOrder: placeOrderSlice.reducer,
 });
 
 // const store = createStore(rootReducer, applyMiddleware(thunk));
